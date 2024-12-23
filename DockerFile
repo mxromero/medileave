@@ -1,0 +1,26 @@
+FROM php:8.1-fpm-bullseye
+
+RUN apt-get update -y && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        libpq-dev \
+        libzip-dev \
+        libonig-dev \
+        libpng-dev \
+        libjpeg62-turbo-dev \
+        libfreetype6-dev \
+        default-libmysqlclient-dev \
+        libgd-dev \
+        php-dev \
+        libwebp-dev \
+        libxpm-dev \
+        && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp --with-xpm \
+        && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql zip \
+        && pecl channel-update pecl.php.net \
+        && pecl install xdebug-3.2.2 \
+        && docker-php-ext-enable xdebug
+
+WORKDIR /var/www
+
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer

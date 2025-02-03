@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('aprobacion', function (Blueprint $table) {
-            $table->integer('idAparobacion')->primary();
-            $table->timestamp('fechaAprobacion');
-            $table->string('comentario', 255)->nullable();
-            $table->string('status', 45);
+        Schema::create('tipo_permisos', function (Blueprint $table) {
+            $table->id('idtipoPermisos');
+            $table->string('NombrePermiso', 255);
+            $table->timestamps();
             $table->integer('Permisos_idPermiso');
             $table->integer('Permisos_fichaUsuario_idFicha');
             $table->integer('Permisos_fichaUsuario_Cargo_idCargo');
             $table->integer('Permisos_fichaUsuario_Sector_idSector');
             $table->integer('Permisos_fichaUsuario_Sector_centros_idcentros');
-            $table->timestamps();
+
+            $table->index(['Permisos_idPermiso', 'Permisos_fichaUsuario_idFicha', 'Permisos_fichaUsuario_Cargo_idCargo', 'Permisos_fichaUsuario_Sector_idSector', 'Permisos_fichaUsuario_Sector_centros_idcentros'], 'fk_tipoPermisos_Permisos1_idx');
         });
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('aprobacion');
+        Schema::dropIfExists('tipoPermiso');
     }
 };

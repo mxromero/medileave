@@ -12,19 +12,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('permisos', function (Blueprint $table) {
-            $table->integer('idPermiso')->primary();
+            $table->id('idPermiso'); // bigint unsigned
             $table->string('dias', 2);
-            $table->timestamp('fecha_desde');
-            $table->timestamp('fecha_hasta');
+            $table->timestamp('fecha_desde')->useCurrent();
+            $table->timestamp('fecha_hasta')->useCurrent();
             $table->string('motivo', 255);
             $table->string('tipo_permiso', 1);
             $table->string('status', 45);
             $table->timestamps();
-            $table->integer('fichaUsuario_idFicha');
-            $table->integer('fichaUsuario_Cargo_idCargo');
-            $table->integer('fichaUsuario_Sector_idSector');
-            $table->integer('fichaUsuario_Sector_centros_idcentros');
 
+            // Claves foráneas de fichaUsuario
+            $table->bigInteger('fichaUsuario_idFicha')->unsigned();
+            $table->bigInteger('fichaUsuario_Cargo_idCargo')->unsigned();
+            $table->bigInteger('fichaUsuario_Sector_idSector')->unsigned();
+            $table->bigInteger('fichaUsuario_Sector_centros_idcentros')->unsigned();
+
+            // Índices
             $table->index(['fichaUsuario_idFicha', 'fichaUsuario_Cargo_idCargo', 'fichaUsuario_Sector_idSector', 'fichaUsuario_Sector_centros_idcentros'], 'fk_permisos_fichaUsuario1_idx');
         });
     }

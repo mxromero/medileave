@@ -12,20 +12,25 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('solicitudes', function (Blueprint $table) {
-            $table->integer('idPermiso')->primary();
-            $table->string('dias', 2);
-            $table->timestamp('fecha_desde');
-            $table->timestamp('fecha_hasta');
-            $table->string('motivo', 255);
-            $table->string('tipo_permiso', 1);
-            $table->string('status', 45);
-            $table->timestamps();
-            $table->integer('fichaUsuario_idFicha');
-            $table->integer('fichaUsuario_Cargo_idCargo');
-            $table->integer('fichaUsuario_Sector_idSector');
-            $table->integer('fichaUsuario_Sector_centros_idcentros');
+            $table->id('idPermiso'); // PRIMARY KEY
 
-            $table->index(['fichaUsuario_idFicha', 'fichaUsuario_Cargo_idCargo', 'fichaUsuario_Sector_idSector', 'fichaUsuario_Sector_centros_idcentros'], 'fk_administrativos_fichaUsuario1_idx');
+            $table->string('dias', 2)->nullable()->comment('Número de días con goce de sueldo');
+            $table->timestamp('fecha_desde')->nullable();
+            $table->timestamp('fecha_hasta')->nullable();
+            $table->string('motivo', 255)->nullable();
+            $table->string('tipo_permiso', 1)->nullable();
+            $table->string('status', 45)->nullable();
+            $table->timestamps();
+
+            // Claves foráneas
+            $table->unsignedBigInteger('fichaUsuario_idFicha');
+            $table->unsignedBigInteger('fichaUsuario_Cargo_idCargo');
+            $table->unsignedBigInteger('fichaUsuario_Sector_idSector');
+
+            // Asegurar que las claves foráneas tengan índices
+            $table->index(['fichaUsuario_idFicha', 'fichaUsuario_Cargo_idCargo', 'fichaUsuario_Sector_idSector'], 'idx_solicitudes_empleado');
+
+
         });
     }
 

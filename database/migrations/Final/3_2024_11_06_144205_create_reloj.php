@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reloj', function (Blueprint $table) {
+        Schema::create('relojes', function (Blueprint $table) {
             $table->id('idReloj');
             $table->string('nombreReloj', 45);
             $table->timestamps();
+            $table->timestamp('delete_at')->nullable();
         });
     }
 

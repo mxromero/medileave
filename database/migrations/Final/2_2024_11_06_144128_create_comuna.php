@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('region', function (Blueprint $table) {
-            $table->id('idregion');
-            $table->string('nombreRegion', 45);
+        Schema::create('comuna', function (Blueprint $table) {
+            $table->id('idComuna');
+            $table->string('nombreComuna', 45);
             $table->string('status', 1);
             $table->timestamps();
+            $table->timestamp('delete_at')->nullable();
+            $table->integer('Region_idregion');
+
+            //$table->index(['Region_idregion'], 'fk_Comuna_Region1_idx');
         });
     }
 
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('region');
+        Schema::dropIfExists('comuna');
     }
 };

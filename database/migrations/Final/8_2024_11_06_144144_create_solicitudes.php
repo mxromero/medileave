@@ -21,16 +21,22 @@ return new class extends Migration
             $table->string('tipo_permiso', 1)->nullable();
             $table->string('status', 45)->nullable();
             $table->timestamps();
+            $table->timestamp('delete_at')->nullable();
 
             // Claves foráneas
-            $table->unsignedBigInteger('fichaUsuario_idFicha');
-            $table->unsignedBigInteger('fichaUsuario_Cargo_idCargo');
-            $table->unsignedBigInteger('fichaUsuario_Sector_idSector');
+            $table->unsignedBigInteger('empleados_idFicha');
 
             // Asegurar que las claves foráneas tengan índices
-            $table->index(['fichaUsuario_idFicha', 'fichaUsuario_Cargo_idCargo', 'fichaUsuario_Sector_idSector'], 'idx_solicitudes_empleado');
+            //$table->index(['empleados_idFicha']);
 
-
+            // Definir la clave foránea correctamente
+            /*$table->foreign(
+                ['empleados_idFicha'],
+                'fk_sol_emp'
+            )->references(
+                ['idFicha']
+            )->on('empleados')->onDelete('cascade');
+            */
         });
     }
 

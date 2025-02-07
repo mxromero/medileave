@@ -13,22 +13,24 @@ return new class extends Migration
     {
         Schema::create('empleados', function (Blueprint $table) {
             $table->id('idFicha');
-            $table->string('rut', 9)->unique();
-            $table->string('Nombre', 45); // Ajustado a singular según el diagrama EER
+            $table->string('rut', 45);
             $table->string('apellidoPaterno', 45);
             $table->string('apellidoMaterno', 45);
+            $table->string('Nombre', 45);
             $table->date('Fecha_nacimiento');
             $table->date('Fecha_ingreso');
-            $table->string('calidad', 10);
-            $table->string('sexo', 1);
+            $table->string('calidad', 45);
+            $table->string('sexo', 45);
             $table->string('nacionalidad', 45);
             $table->string('categoria', 45);
-            $table->string('nivel', 2);
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('sector_id')->constrained('sector', 'idSector')->onDelete('cascade');
-            $table->foreignId('cargo_id')->constrained('cargo', 'idCargo')->onDelete('cascade');
-            $table->foreignId('tipo_permiso_id')->constrained('tipo_permisos', 'idtipoPermisos')->onDelete('cascade');
+            $table->string('nivel', 45);
+            $table->string('correo', 45);
             $table->timestamps();
+            $table->timestamp('delete_at')->nullable();
+
+            // Índices
+            //$table->index('idFicha', 'fk_fichaUsuario_Cargo1_idx');
+            //$table->index('idFicha', 'fk_fichaUsuario_Sector1_idx');
         });
     }
 

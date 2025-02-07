@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('tipo_permiso', 1);
             $table->string('status', 45);
             $table->timestamps();
+            $table->timestamp('delete_at')->nullable();
 
             // Claves foráneas de fichaUsuario
             $table->bigInteger('fichaUsuario_idFicha')->unsigned();
@@ -28,7 +29,8 @@ return new class extends Migration
             $table->bigInteger('fichaUsuario_Sector_centros_idcentros')->unsigned();
 
             // Índices
-            $table->index(['fichaUsuario_idFicha', 'fichaUsuario_Cargo_idCargo', 'fichaUsuario_Sector_idSector', 'fichaUsuario_Sector_centros_idcentros'], 'fk_permisos_fichaUsuario1_idx');
+            //$table->index(['fichaUsuario_idFicha', 'fichaUsuario_Cargo_idCargo', 'fichaUsuario_Sector_idSector', 'fichaUsuario_Sector_centros_idcentros'], 'fk_permisos_fichaUsuario1_idx');
+
         });
     }
 

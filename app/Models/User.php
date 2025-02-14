@@ -13,10 +13,6 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
 
-    public function empleado()
-    {
-        return $this->hasOne(modelEmpleados::class);
-    }
 
 
     /**
